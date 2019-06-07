@@ -1,0 +1,51 @@
+/StPicoEvent.h/1.9/Wed Nov  7 19:12:38 2018//
+/StPicoTrack.h/1.15/Wed Nov  7 19:12:39 2018//
+D/macros////
+/StPicoEvent.cxx/1.13/Result of merge//
+/StPicoTrack.cxx/1.22/Result of merge//
+/PhysicalConstants.h/1.2/Wed Nov 14 00:50:27 2018//
+/StPicoBEmcPidTraits.cxx/1.11/Wed Nov 14 00:50:29 2018//
+/StPicoBEmcPidTraits.h/1.9/Wed Nov 14 00:50:29 2018//
+/StPicoBTofHit.cxx/1.5/Wed Nov 14 00:50:29 2018//
+/StPicoBTofHit.h/1.8/Wed Nov 14 00:50:30 2018//
+/StPicoBTofPidTraits.cxx/1.8/Wed Nov 14 00:50:30 2018//
+/StPicoBTofPidTraits.h/1.7/Wed Nov 14 00:50:30 2018//
+/StPicoBTowHit.cxx/1.8/Wed Nov 14 00:50:30 2018//
+/StPicoBTowHit.h/1.7/Wed Nov 14 00:50:30 2018//
+/StPicoBbcHit.cxx/1.4/Wed Nov 14 00:50:28 2018//
+/StPicoBbcHit.h/1.5/Wed Nov 14 00:50:29 2018//
+/StPicoCommon.cxx/1.3/Wed Nov 14 00:50:31 2018//
+/StPicoCommon.h/1.5/Wed Nov 14 00:50:31 2018//
+/StPicoEpdHit.cxx/1.3/Wed Nov 14 00:50:33 2018//
+/StPicoEpdHit.h/1.4/Wed Nov 14 00:50:33 2018//
+/StPicoFmsHit.cxx/1.5/Wed Nov 14 00:50:35 2018//
+/StPicoFmsHit.h/1.7/Wed Nov 14 00:50:35 2018//
+/StPicoHelix.cxx/1.3/Wed Nov 14 00:50:35 2018//
+/StPicoHelix.h/1.5/Wed Nov 14 00:50:36 2018//
+/StPicoMessMgr.h/1.2/Wed Nov 14 00:50:36 2018//
+/StPicoMtdHit.cxx/1.5/Wed Nov 14 00:50:36 2018//
+/StPicoMtdHit.h/1.7/Wed Nov 14 00:50:36 2018//
+/StPicoMtdPidTraits.cxx/1.8/Wed Nov 14 00:50:37 2018//
+/StPicoMtdPidTraits.h/1.8/Wed Nov 14 00:50:37 2018//
+/StPicoMtdTrigger.cxx/1.14/Wed Nov 14 00:50:37 2018//
+/StPicoMtdTrigger.h/1.6/Wed Nov 14 00:50:37 2018//
+/StPicoPhysicalHelix.cxx/1.3/Wed Nov 14 00:50:38 2018//
+/StPicoPhysicalHelix.h/1.5/Wed Nov 14 00:50:38 2018//
+/StPicoTrackCovMatrix.cxx/1.2/Wed Nov 14 00:50:38 2018//
+/StPicoTrackCovMatrix.h/1.4/Wed Nov 14 00:50:38 2018//
+/SystemOfUnits.h/1.1/Wed Nov 14 00:50:39 2018//
+/Makefile/1.2/Fri Mar  8 18:12:26 2019//
+/README.md/1.1/Thu Feb 28 14:14:39 2019//
+/StPicoBEmcSmdEHit.cxx/1.1/Thu Feb 28 14:14:39 2019//
+/StPicoBEmcSmdEHit.h/1.1/Thu Feb 28 14:14:39 2019//
+/StPicoBEmcSmdPHit.cxx/1.1/Thu Feb 28 14:14:40 2019//
+/StPicoBEmcSmdPHit.h/1.1/Thu Feb 28 14:14:40 2019//
+/StPicoDst.cxx/1.5/Result of merge//
+/StPicoDst.h/1.8/Result of merge//
+/StPicoDstLinkDef.h/1.2/Result of merge//
+/StPicoDstReader.cxx/1.5/Result of merge//
+/StPicoDstReader.h/1.6/Fri Mar  8 18:12:35 2019//
+/StPicoEmcTrigger.cxx/1.6/Fri Mar  8 18:12:35 2019//
+/StPicoEmcTrigger.h/1.7/Fri Mar  8 18:12:35 2019//
+/StPicoArrays.cxx/1.6/Result of merge//
+/StPicoArrays.h/1.5/Result of merge//

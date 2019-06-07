@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOFSIM-GEN" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="0.3" fileListSyntax="paths" simulateSubmission ="false" >
+
+    <command>
+
+        starver dev
+
+        set nEvents = 10000
+
+        echo ${INPUTFILE0}
+
+        ./run_etofsim_generator.sh ${nEvents} epikp_${JOBINDEX}  &gt;&amp; /star/data06/ETOF/etof-sim/log/${JOBID}.log
+
+    </command>
+
+    <input  URL="filelist:/star/u/fseck/StEtofHitMakerinput_gen.list" nFiles="all" />
+
+    <stdout URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.out" />
+    <stderr URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.err" />
+
+    <SandBox>
+        <Package>
+                <File>file:./starsim.C</File>
+                <File>file:./run_etofsim_generator.sh</File>
+                <File>file:./.sl73_gcc485</File>
+        </Package>
+    </SandBox>
+
+    <Generator> 
+        <Location>/star/u/fseck/StEtofHitMaker/gen/</Location> 
+    </Generator> 
+</job>

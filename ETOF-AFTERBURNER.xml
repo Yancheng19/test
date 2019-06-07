@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOF-AFTERBURNER" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="5" fileListSyntax="paths" simulateSubmission ="false" >
+
+    <command>
+
+        starver dev
+
+        <!-- set nEvents = 10000 -->
+        set nStart = 1
+        set nStop  = 10000
+
+        set chainOptions = '"in ry2018a AgML etofMatch picoDst picoVtxDefault picoWrite"'
+        <!-- set chainOptions = '"in ry2018a AgML etofMatch"' -->
+
+        echo ${INPUTFILE0}
+
+        <!-- root4star -b -q -l 'bfc.C( '${nEvents}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/reco-files/log/${JOBID}.log -->
+        root4star -b -q -l 'bfc.C( '${nStart}', '${nStop}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/reco-files/log/${JOBID}.log
+
+    </command>
+
+    <ResourceUsage>
+        <Memory>
+            <MinMemory>  500 </MinMemory>
+            <MaxMemory> 3000 </MaxMemory>
+        </Memory>
+    </ResourceUsage>
+
+
+    <!-- <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/input_digi_track.list" nFiles="all" /> -->
+    <!-- <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/input_27gev_calib_prod_fwfixed.list" nFiles="all" /> -->
+    <!-- <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/input_27gev_calib_prod_peak450ns.list" nFiles="all" /> -->
+    <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/input_27gev_calib_prod_peak450ns_mudst.list" nFiles="all" />
+
+    <!-- <output fromScratch="*.etofHit.root"    toURL="file:/star/data06/ETOF/reco-files/matched/" /> -->
+    <!-- <output fromScratch="*.etofQA.root"     toURL="file:/star/data06/ETOF/reco-files/matched/" /> -->
+    <output fromScratch="*.etofMatch.root"  toURL="file:/star/data06/ETOF/reco-files/matched/" />
+
+    <output fromScratch="*.picoDst.root"      toURL="file:/star/data06/ETOF/picoDstAna/" />
+    <!-- <output fromScratch="*.MuDst.root"      toURL="file:/star/data06/ETOF/muDstAna/" /> -->
+    <!-- <output fromScratch="*.event.root"      toURL="file:/star/data06/ETOF/reco-files/matched/" /> -->
+
+    <stdout URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.out" />
+    <stderr URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.err" />
+
+    <SandBox>
+        <Package>
+            <File>file:/star/u/fseck/StEtofHitMaker/StRoot</File>
+            <File>file:/star/u/fseck/StEtofHitMaker/.sl73_gcc485</File>
+            <File>file:/star/data06/ETOF/StETofCalib.hst.root</File>
+        </Package>
+    </SandBox>
+
+    <Generator> 
+        <Location>/star/u/fseck/StEtofHitMaker/gen/</Location> 
+    </Generator> 
+</job>

@@ -1,0 +1,42 @@
+.sl73_gcc485/
+
+# StRoot/CVS
+
+paw.metafile
+temp_gccflags.c
+
+StRoot/StETofDigiMaker/.consign
+StRoot/StETofCalibMaker/.consign
+StRoot/StETofHitMaker/.consign
+StRoot/StETofMatchMaker/.consign
+StRoot/StETofQAMaker/.consign
+StRoot/StETofSimMaker/.consign
+StRoot/StETofUtil/.consign
+StRoot/ETofAnalysis/.consign
+
+StRoot/StBFChain/doc/.consign
+StRoot/StBFChain/.consign
+
+StRoot/StEvent/.consign
+
+StRoot/StMuDSTMaker/.consign
+StRoot/StMuDSTMaker/COMMON/.consign
+StRoot/StMuDSTMaker/EZTREE/.consign
+
+StRoot/StPicoDstMaker/.consign
+StRoot/StPicoEvent/.consign
+
+# StRoot/StEvent/.includes_for_export.flg
+# StRoot/StEvent/CVS
+# StRoot/StEvent/PACKAGE
+# StRoot/StEvent/README
+# StRoot/StEvent/doc
+
+gen/
+log/
+
+sched*.dataset
+*.session.xml
+
+*.root
+*.pdf

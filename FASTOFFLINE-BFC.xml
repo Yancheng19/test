@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="FASTOFFLINE-BFC" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="0.5" fileListSyntax="paths" simulateSubmission ="false" >
+
+    <command>
+
+    starver dev
+
+    set nEvents = 500
+    
+    <!-- set chainOptions = '"P2018a StiCA btofDat vpdCalib mtd etofDat EvOut PicoVtxDefault BEmcChkStat OSpaceZ2 OGridLeak3D -hitfilt"' -->
+    set chainOptions = '"DbV20180730,P2018a,StiCA,-beamline3D,btof,mtd,BEmcChkStat,CorrX,OPr40,-OPr13,OSpaceZ2,OGridLeakFull,-hitfilt,picowrite,picoVtxDefault,etofDat,EvOut,KeepTpcHit"'
+    
+    echo ${INPUTFILE0}
+
+    root4star -b -q -l 'bfc.C( '${nEvents}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp;  /star/data06/ETOF/reco-files/log/${JOBID}.log
+
+    </command>
+
+    <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/files27GeV.list" nFiles="10" />
+
+    <output fromScratch="*.MuDst.root" toURL="file:/star/data06/ETOF/reco-files/fastoffline2/" />
+    <output fromScratch="*.event.root" toURL="file:/star/data06/ETOF/reco-files/fastoffline2/" />
+
+    <stdout URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.out" />
+    <stderr URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.err" />
+
+    <SandBox>
+        <Package>
+                <File>file:/star/u/fseck/StEtofHitMaker/StRoot</File>
+                <File>file:/star/u/fseck/StEtofHitMaker/.sl73_gcc485</File>
+        </Package>
+    </SandBox>
+
+    <Generator> 
+        <Location>/star/u/fseck/StEtofHitMaker/gen/</Location> 
+    </Generator> 
+</job>

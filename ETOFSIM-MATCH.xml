@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOFSIM-MATCH" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="2" fileListSyntax="paths" simulateSubmission ="false" >
+
+    <command>
+
+        starver dev
+
+        <!-- set nEvents = 20000 -->
+
+        set nStart = 1
+        set nStop  = 10000
+
+        set chainOptions = '"in y2019 event readAll -StDbT -EmcUtil"'
+
+        echo ${INPUTFILE0}
+
+        <!--root4star -b -q -l 'bfcRunner.C( '${nEvents}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/etof-sim/log/${JOBID}.log  -->
+        root4star -b -q -l 'bfcRunner.C( '${nStart}', '${nStop}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/etof-sim/log/${JOBID}.log
+
+    </command>
+
+    <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/input_epikp.list" nFiles="all" />
+
+    <output fromScratch="generator.etofSim.root"      toURL="file:/star/data06/ETOF/etof-sim/generator.etofSim.$JOBID.root" />
+    <output fromScratch="generator.etofMatch.root"    toURL="file:/star/data06/ETOF/etof-sim/generator.etofMatch.$JOBID.root" />
+
+    <stdout URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.out" />
+    <stderr URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.err" />
+
+    <SandBox>
+        <Package>
+            <File>file:/star/u/fseck/StEtofHitMaker/StRoot</File>
+            <File>file:/star/u/fseck/StEtofHitMaker/.sl73_gcc485</File>
+            <File>file:/star/u/fseck/StEtofHitMaker/bfcRunner.C</File>
+            <File>file:/star/u/fseck/StEtofHitMaker/loadStarGeometry.C</File>
+        </Package>
+    </SandBox>
+
+    <Generator> 
+        <Location>/star/u/fseck/StEtofHitMaker/gen/</Location> 
+    </Generator> 
+</job>

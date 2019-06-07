@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOF-BFC" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="0.3" fileListSyntax="paths" simulateSubmission ="false" >
+
+    <command>
+
+        starver SL18f
+
+        set nEvents = 100000
+        set chainOptions = '"in event tpcDB bTofDat vpdCalib etofDat etofCalib eTofHit eTofQA evOut cMuDst"'
+
+        echo ${INPUTFILE0}
+
+        root4star -b -q -l 'bfc.C( '${nEvents}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/reco-files/log/${JOBID}.log
+
+    </command>
+
+    <input  URL="filelist:/star/u/fseck/StEtofHitMaker/filelists/files27GeV.list" nFiles="all" />
+
+    <output fromScratch="st*.*.root"  toURL="file:/star/data06/ETOF/reco-files/etof-hits/" />
+
+    <stdout URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.out" />
+    <stderr URL="file:/star/u/fseck/StEtofHitMaker/log/$JOBID.err" />
+
+    <SandBox>
+        <Package>
+                <File>file:/star/u/fseck/StEtofHitMaker/StRoot</File>
+                <File>file:/star/u/fseck/StEtofHitMaker/.sl73_gcc485</File>
+                <File>file:/star/data06/ETOF/StETofCalib.hst.root</File>
+        </Package>
+    </SandBox>
+
+    <Generator> 
+        <Location>/star/star/u/fseck/StEtofHitMaker/gen/</Location> 
+    </Generator> 
+</job>

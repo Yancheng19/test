@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOF-BFC" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="0.05" fileListSyntax="paths" simulateSubmission ="false" >
+
+	<command>
+			
+	    starver dev
+		 cons
+		 cd /star/u/weidenkaff/StEtofHitMaker/
+		 chmod +x run_calib.sh
+		 source run_calib.sh
+
+	</command>
+
+        <input  URL="filelist:/star/u/weidenkaff/StEtofHitMaker/Single27GeV.list" nFiles="all" />
+
+	<output fromScratch="StETofQA.hst.root" toURL="file:/star/u/weidenkaff/StEtofHitMaker/out/StETofQA.hst.$JOBID.root" />
+	<output fromScratch="StETofCalib.hst.root" toURL="file:/star/u/weidenkaff/StEtofHitMaker/out/StETofCalib.hst.$JOBID.root" />
+	<output fromScratch="*.MuDst.root"      toURL="file:/star/u/weidenkaff/StEtofHitMaker/out/" />
+	<output fromScratch="*.event.root"      toURL="file:/star/u/weidenkaff/StEtofHitMaker/out/" />
+	<output fromScratch="*.pdf"      		toURL="file:/star/u/weidenkaff/StEtofHitMaker/out/" />
+		
+	<stdout URL="file:/star/u/weidenkaff/StEtofHitMaker/log/$JOBID.out" />
+        <stderr URL="file:/star/u/weidenkaff/StEtofHitMaker/log/$JOBID.err" />
+     
+        <SandBox>
+                <Package>
+                        <File>file:./StRoot</File>
+                        <File>file:./.sl73_gcc485</File>
+                        <File>file:./StETofCalib.hst.root</File>
+                        <File>file:./run_calib.sh</File>
+                        <File>file:./pl_HitQA.C</File>
+                </Package>
+        </SandBox>
+
+	<Generator> 
+ 		<Location>/star/u/weidenkaff/StEtofHitMaker/gen/</Location> 
+ 	</Generator> 
+</job>

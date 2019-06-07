@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOF-2019TEST" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="0.5" fileListSyntax="paths" simulateSubmission ="false" >
+
+    <command>
+
+        starver dev
+
+        set nEvents = 50000
+        <!-- set nStart = 1     -->
+        <!-- set nStop  = 10000 -->
+
+        <!-- set chainOptions = '"in event tpcDb AgML ry2019a btofDat vpdCalib etofDat etofCalib etofHit etofMatch etofQA"' -->
+        set chainOptions = '"in AgML ry2019a etofCalib etofHit etofMatch etofQA"'
+
+        echo ${INPUTFILE0}
+
+        root4star -b -q -l 'bfcRunner2019.C( '${nEvents}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/2019/log/${JOBID}.log
+        <!-- root4star -b -q -l 'bfcRunner2019.C( '${nStart}', '${nStop}', '"${chainOptions}"', "'${INPUTFILE0}'" )'  &gt;&amp; /star/data06/ETOF/2019/log/${JOBID}.log -->
+
+    </command>
+
+    <input URL="filelist:/star/u/fseck/etof-reco/filelists/fastOfflineProd_test.list" nFiles="all" />
+
+    <output fromScratch="*.etofHit.root"    toURL="file:/star/data06/ETOF/2019/" />
+    <output fromScratch="*.etofMatch.root"  toURL="file:/star/data06/ETOF/2019/" />
+    <output fromScratch="*.etofCalib.root"  toURL="file:/star/data06/ETOF/2019/" />
+    <output fromScratch="*.etofQA.root"     toURL="file:/star/data06/ETOF/2019/" />
+    <!-- <output fromScratch="*.MuDst.root"      toURL="file:/star/data06/ETOF/2019/" /> -->
+
+    <stdout URL="file:/star/u/fseck/etof-reco/log/$JOBID.out" />
+    <stderr URL="file:/star/u/fseck/etof-reco/log/$JOBID.err" />
+
+    <SandBox>
+        <Package>
+            <File>file:/star/u/fseck/etof-reco/bfcRunner2019.C</File>
+            <File>file:/star/u/fseck/etof-reco/StRoot</File>
+            <File>file:/star/u/fseck/etof-reco/.sl73_gcc485</File>
+            <File>file:/star/u/fseck/etof-reco/StETofCalib.hst2019.root</File>
+            <File>file:/star/u/fseck/etof-reco/macrosDb</File>
+        </Package>
+    </SandBox>
+
+    <Generator> 
+        <Location>/star/u/fseck/etof-reco/gen/</Location> 
+    </Generator> 
+</job>

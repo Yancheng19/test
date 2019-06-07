@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job  name="ETOF-BFC" minFilesPerProcess="1" maxFilesPerProcess="1" filesPerHour="1" fileListSyntax="paths" simulateSubmission ="false" >
+
+<!--
+Run this script with 
+ 	star-submit-template -template ETOF-Calib_paralell.xml -p bnl_condor_dag -entities iStep=0,WORKDIR=/star/u/weidenkaff/StEtofHitMaker,OUTDIR=/star/u/weidenkaff/StEtofHitMaker
+-->
+
+
+
+
+
+	<Action frequency="1" position="FIRST">
+		<Exec>
+			<!-- set up subfolders for subprocesses -->
+			rm -r &OUTDIR;/out/$JOBINDEX
+			mkdir &OUTDIR;/out/$JOBINDEX
+			echo "    Dispatched job Nr. ${JOBINDEX} in calibration step &iStep; for processing on the batch system " `date` >> &WORKDIR;/CalibStatus.txt
+		</Exec>
+	</Action>
+
+	<command>
+			echo "    Started processing job Nr. ${JOBINDEX} calibration step &iStep; " `date` >> &WORKDIR;/CalibStatus.txt
+
+			<!-- Run the actual macro -->
+	   <!-- starver dev -->
+	   starver dev
+		 cons  <!--Recompile befoer every step. Careful to use when changing stuff at runtime! -->
+
+		<!-- root4star -b -q -l 'bfc.C( 5000, "in, Event, ry2018a, AgML, tpcDB, btofDat, vpdCalib, etofDat, etofCalib, etofHit, etofMatch, etofQa", "'${INPUTFILE0}'" )' > &amp; ! process_log.txt -->
+
+root4star -b -q -l 'bfc.C( 20000, "in, ry2018a, AgML, tpcDB, btofDat, vpdCalib, etofDat, etofCalib, etofHit, etofMatch, etofQa, cMuDst", "'${INPUTFILE0}'" )'
+
+			<!-- move manually to make sure it is done before the merging! -->
+		<!-- mv $SCRATCH/*.root &OUTDIR;/out/$JOBINDEX/
+			 rm $SCRATCH/*.event.root-->
+			 mv $SCRATCH/*.etofCalib.root &OUTDIR;/out/$JOBINDEX/
+			 mv $SCRATCH/*.etofQA.root 	&OUTDIR;/out/$JOBINDEX/
+
+			echo "    Finished processing job Nr. ${JOBINDEX} calibration step &iStep; " `date` >> &WORKDIR;/CalibStatus.txt
+
+	</command>
+
+	<Action frequency="0" position="LAST">
+		<Exec>
+			
+			echo "running merging now" >> &WORKDIR;/CalibStatus.txt
+
+			<!-- combine outputs -->
+
+			<!--hadd -f &WORKDIR;/out/*/*.etofCalib.root &WORKDIR;/StETofCalib.hst.root -->
+			echo `ls -1 &OUTDIR;/out/*/*| wc -l` " files in the output of calib step &iStep; " `date` >> &WORKDIR;/CalibStatus.txt 
+			echo "  " >> &WORKDIR;/CalibStatus.txt
+			
+			hadd -f &WORKDIR;/StETofCalib.hst.root &OUTDIR;/out/*/*.etofCalib.root
+			hadd -f &WORKDIR;/StETofQA.hst.root 	&OUTDIR;/out/*/*.etofQA.root
+
+			cp &WORKDIR;/StETofQA.hst.root &WORKDIR;/StETofQA_Iter_&iStep;.hst.root
+			cp &WORKDIR;/StETofCalib.hst.root &WORKDIR;/StETofCalib_Iter_&iStep;.hst.root
+
+			<!-- Recursion to start next step -->			
+			echo "Finished calibration step &iStep; " `date` >> &WORKDIR;/CalibStatus.txt
+
+		</Exec>
+	</Action>
+
+  <!--  <input  URL="filelist:&WORKDIR;/filelists/input_27gev_calib_prod_peak450ns.list" nFiles="all" />-->
+   <input  URL="filelist:&WORKDIR;/filelists/filelist_day054_daq.list" nFiles="all" />
+<!--<input  URL="filelist:&WORKDIR;/filelists/mudst_file2.list" nFiles="all" />-->
+			<!-- make sure all output ends up in the right subfolders, make sure NOT to write *.event.root!! multi-GB file if MTD-files are used! -->
+	<output fromScratch="*.etofCalib.root" 				toURL="file:&OUTDIR;/out/$JOBINDEX/" />
+	<output fromScratch="*.etofQA.root" 					toURL="file:&OUTDIR;/out/$JOBINDEX/" />
+	<output fromScratch="*_log.txt.root" 					toURL="file:&OUTDIR;/out/$JOBINDEX/" />
+ <!--  <output fromScratch="*.etofHit.root" 					toURL="file:&OUTDIR;/out/$JOBINDEX/" />
+	<output fromScratch="*.etofMatch.root" 				toURL="file:&OUTDIR;/out/$JOBINDEX/" />
+	<output fromScratch="*.event.geom.root" 				toURL="file:&OUTDIR;/out/$JOBINDEX/" />
+	<output fromScratch="*.pdf" 								toURL="file:&OUTDIR;/out/$JOBINDEX/" />-->
+		
+	<stdout URL="file:&OUTDIR;/log/$JOBID.out" />
+   <stderr URL="file:&OUTDIR;/log/$JOBID.out" />
+     
+        <SandBox>
+                <Package>
+                        <File>file:&WORKDIR;/StRoot</File>
+                        <File>file:&WORKDIR;/.sl73_gcc485</File>
+                        <File>file:&WORKDIR;/StETofCalib.hst.root</File>
+                </Package>
+        </SandBox>
+
+	<Generator> 
+ 		<Location>&OUTDIR;/gen/</Location> 
+ 	</Generator> 
+</job>
